@@ -3,10 +3,11 @@ import cv2
 def main():
     cap = cv2.VideoCapture(0)
     nr_images = 0
-    while True:
-        if not cap.isOpened():
+    if not cap.isOpened():
             print("Cannot open camera")
             exit()
+    while True:
+        
         ret, frame = cap.read()
         cv2.imshow("Press \'r\' to capture image",frame)
         key = cv2.waitKey(1)
