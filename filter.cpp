@@ -3,8 +3,8 @@
 
 
 // EKF Prediction Step
-void EKFprediction(Vector& x, Matrix& P, StateSpaceModel f, const Matrix& Q) {
-    auto [fx, Fx] = f(x);  // Evaluate motion model and Jacobian
+void EKFprediction(Vector& x, Matrix& P, MotionModel f, const Matrix& Q, double T) {
+    auto [fx, Fx] = f(x, T);  // Evaluate motion model and Jacobian
 
     x = fx; 
 
@@ -16,7 +16,7 @@ void EKFprediction(Vector& x, Matrix& P, StateSpaceModel f, const Matrix& Q) {
 }
 
 // EKF Update Step
-void EKFupdate(Vector& x, Matrix& P, const Vector& y, StateSpaceModel h, const Matrix& R) {
+void EKFupdate(Vector& x, Matrix& P, const Vector& y, MeasurementModel h, const Matrix& R) {
     auto [hx, Hx] = h(x);  // Evaluate measurement model and Jacobian
 
     // S = Hx * P * Hx' + R
@@ -52,11 +52,12 @@ void ExtendedKalmanFilter(
     Vector& x,             // State vector
     Matrix& P,             // State covariance
     const Vector& y,       // Measurement vector
-    StateSpaceModel f,     // Motion model
+    MotionModel f,         // Motion model
     const Matrix& Q,       // Process noise covariance
-    StateSpaceModel h,     // Measurement model
-    const Matrix& R        // Measurement noise covariance
+    MeasurementModel h,    // Measurement model
+    const Matrix& R,       // Measurement noise covariance
+    double T               // Sample time
 ) {
-    EKFprediction(x, P, f, Q);
+    EKFprediction(x, P, f, Q, T);
     EKFupdate(x, P, y, h, R);
 }
