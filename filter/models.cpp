@@ -1,4 +1,5 @@
 #include "models.h"
+#include <cmath>
 
 std::pair<Vector, Matrix> rangeBearingModel(const Vector& x) {
     double range = std::sqrt(x[0]*x[0]+x[1]*x[1]);

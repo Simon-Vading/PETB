@@ -2,9 +2,8 @@
 #define MODELS_H
 
 #include "matrix_utils.h"
-#include <cmath>
 
 std::pair<Vector, Matrix> rangeBearingModel(const Vector& x);
-std::pair<Vector, Matrix> randomWalkBearingModel(const Vector& x);
+std::pair<Vector, Matrix> randomWalkBearingModel(const Vector& x, const double T);
 
 #endif
